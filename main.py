@@ -1,3 +1,4 @@
+
 import json
 import requests
 import urllib.parse
@@ -448,7 +449,9 @@ def get_form(seed=""):
 @app.post("/submit", response_class=HTMLResponse)
 def submit(h_captcha_response: str = Form(alias="h-captcha-response"), seed: str = Form(...)):
     return requests.post(fr"{url}submit",data={"h-captcha-response": h_captcha_response, "seed": seed}).text
-
+@app.get("/qa")
+def home():
+    return template("qanda.html", {"request": request})
 """
 @app.get("/verify", response_class=HTMLResponse)
 def home(response: Response,request: Request,yuki: Union[str] = Cookie(None)):
