@@ -108,7 +108,7 @@ window.onload = () => {
 >
   {% for videourl in videourls %}
     <source src="{{ videourl }}" type="video/mp4" />
-    <source src="{{video1040}}" type="video/webm" />
+    <source src="{{video1080}}" type="video/webm" />
   {% endfor %}
   
   <track kind="subtitles" src="{{invser}}api/v1/captions/{{ videoid }}?label=Japanese" srclang="ja" label="日本語" default>
