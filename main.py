@@ -141,7 +141,7 @@ def get_1080(videoid):
     global logs
     try:
         response = apirequest(r"api/v1/videos/" + urllib.parse.quote(videoid))
-        json.loads(video_info)
+        video_info = json.loads(response)
 
         # 1040pのWebMストリームを探す
         for stream in video_info.get('adaptiveFormats', []):
