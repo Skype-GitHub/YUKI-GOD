@@ -136,16 +136,26 @@ def get_genre(videoid):
     # "viewCountText" を抽出
     view_count_text = data.get("genre")
     return view_count_text
-"""
-def get_1040(videoid):
+
+def get_1080(videoid):
     global logs
-    response = apirequest(r"api/v1/videos/" + urllib.parse.quote(videoid))
-    data = json.loads(response)
-    for adaptiveFormats in data['adaptiveFormats']:
-        if adaptiveFormats['size'] == '1920x1080' and adaptiveFormats['container'] == 'webm':
-            return adaptiveFormats['url']
+    try:
+        response = apirequest(r"api/v1/videos/" + urllib.parse.quote(videoid))
+        response.raise_for_status()  # ステータスコードが200以外の場合、例外を発生させる
+        video_info = response.json()
+        print(f"---------------------\n{video_info}\n---------------------")
+
+        # 1040pのWebMストリームを探す
+        for stream in video_info.get('adaptiveFormats', []):
+            if stream.get('qualityLabel') == '1080p' and stream.get('container') == 'webm':
+                return stream.get('url')
+
+        return None
+
+    except requests.exceptions.RequestException as e:
+        return None
     return None  # 一致するフォーマットが見つからなかった場合にNoneを返す
-"""
+
 def get_search(q,page):
     global logs
     t = json.loads(apirequest(fr"api/v1/search?q={urllib.parse.quote(q)}&page={page}&hl=jp"))
@@ -306,11 +316,11 @@ def video(v:str,response: Response,request: Request,yuki: Union[str] = Cookie(No
     t2 = get_data2(videoid)
     like = get_like(videoid)
     genre = get_genre(videoid)
-    """
-    video1040 = get_1040(videoid)
-    """# "video1040":video1040,
+    
+    video1080 = get_1080(videoid)
+    # "video1040":video1040,
     response.set_cookie("yuki","True",max_age=60 * 60 * 24 * 7)
-    return template('video.html', {"request": request,"videoid":videoid,"invser":apis[0],"videourls":t[1],"res":t[0],"description":t[2],"videotitle":t[3],"authorid":t[4],"authoricon":t[6],"author":t[5],"viewCountText":t2,"likeCountText":like,"genre":genre,"proxy":proxy})
+    return template('video.html', {"request": request,"videoid":videoid,"invser":apis[0],"videourls":t[1],"res":t[0],"description":t[2],"videotitle":t[3],"authorid":t[4],"authoricon":t[6],"author":t[5],"viewCountText":t2,"likeCountText":like,"genre":genre,"proxy":proxy,"video1080":video1080})
 
 
 @app.get("/search", response_class=HTMLResponse,)
