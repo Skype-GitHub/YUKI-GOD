@@ -141,9 +141,7 @@ def get_1080(videoid):
     global logs
     try:
         response = apirequest(r"api/v1/videos/" + urllib.parse.quote(videoid))
-        response.raise_for_status()  # ステータスコードが200以外の場合、例外を発生させる
         video_info = response.json()
-        print(f"---------------------\n{video_info}\n---------------------")
 
         # 1040pのWebMストリームを探す
         for stream in video_info.get('adaptiveFormats', []):
