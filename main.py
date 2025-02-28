@@ -9,7 +9,7 @@ import os
 import subprocess
 from cache import cache
 ver = "2.7.9.2" # バージョン    
-update = "" # アップデート内容
+update = "β" # アップデート内容
 token = "e4f5c13f-4f31-4ae1-ac5c-b3f1df232073" # hcaptchaのサイトキー
 max_api_wait_time = 5
 max_time = 10
@@ -141,7 +141,7 @@ def get_1080(videoid):
     global logs
     try:
         response = apirequest(r"api/v1/videos/" + urllib.parse.quote(videoid))
-        video_info = response.json()
+        json.loads(video_info)
 
         # 1040pのWebMストリームを探す
         for stream in video_info.get('adaptiveFormats', []):
@@ -268,7 +268,6 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Union
 from fastapi.security import HTTPBasic, HTTPBasicCredentials#BASIC
-import json
 security = HTTPBasic()#BASIC
 
 app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
