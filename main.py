@@ -8,8 +8,8 @@ import random
 import os
 import subprocess
 from cache import cache
-ver = "2.8" # バージョン    
-update = "1080pの動画をダウンロード出来るように(ダウンロードしなくても見れるようには次アップデートにて)" # アップデート内容
+ver = "2.8.1" # バージョン    
+update = "1080pの動画をダウンロード出来るように" # アップデート内容
 token = "e4f5c13f-4f31-4ae1-ac5c-b3f1df232073" # hcaptchaのサイトキー
 max_api_wait_time = 5
 max_time = 10
