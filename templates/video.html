@@ -107,10 +107,10 @@ window.onload = () => {
   }'
 >
   {% for videourl in videourls %}
-    <source src="{{ videourl }}" type="video/mp4" />
+    <source src="{{ videourl }}" type="video/mp4" label="デフォルト" res="480" default>
   {% endfor %}
-  
-  <track kind="subtitles" src="{{invser}}api/v1/captions/{{ videoid }}?label=Japanese" srclang="ja" label="日本語" default>
+  <source src="{{video1080}}" type="video/webm" label="1080p" res="1080">
+  <track kind="subtitles" src="{{invser}}api/v1/captions/{{ videoid }}?label=Japanese" srclang="ja" label="日本語" >
   <track kind="subtitles" src="{{invser}}api/v1/captions/{{ videoid }}?label=Japanese+%28auto-generated%29" srclang="jaauto" label="日本語-自動生成">
   <track kind="subtitles" src="/vtt?id={{ videoid }}" srclang="jaautogaku" label="日本語-自動生成(学タブ)">
 </video>
