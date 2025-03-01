@@ -125,7 +125,7 @@ window.onload = () => {
                     <source src="{{videourl}}">
                     {% endfor %}
                 </video>
-                </video></div>
+                </video><script>videojs('player').videoJsResolutionSwitcher()</script></div>
             </div><div id="videobtn"><button onclick="toggleContent()">Video.js/Normal</button></div>
             <div class="h-box">
                 <h1>{{ videotitle }}</h1>
