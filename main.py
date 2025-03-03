@@ -154,7 +154,38 @@ def get_1080(videoid):
     except requests.exceptions.RequestException as e:
         return None
     return None  # 一致するフォーマットが見つからなかった場合にNoneを返す
+"""
+def get_1080(videoid):
+    global logs
+    try:
+        response = apirequest(r"api/v1/videos/" + urllib.parse.quote(videoid))
+        video_info = json.loads(response)
+        videourl = []
+        # 1040pのWebMストリームを探す
+        for stream in video_info.get('adaptiveFormats', []):
+            if stream.get('qualityLabel') == '1080p' and stream.get('container') == 'webm':
+                videourl.remove(stream.get('url'))
+        for stream in video_info.get('adaptiveFormats', []):
+            if stream.get('qualityLabel') == '720p' and stream.get('container') == 'webm':
+                videourl.remove(stream.get('url'))
+        for stream in video_info.get('adaptiveFormats', []):
+            if stream.get('qualityLabel') == '480p' and stream.get('container') == 'webm':
+                videourl.remove(stream.get('url'))
+        for stream in video_info.get('adaptiveFormats', []):
+            if stream.get('qualityLabel') == '360p' and stream.get('container') == 'webm':
+                videourl.remove(stream.get('url'))
+        for stream in video_info.get('adaptiveFormats', []):
+            if stream.get('qualityLabel') == '240p' and stream.get('container') == 'webm':
+                videourl.remove(stream.get('url'))
+        for stream in video_info.get('adaptiveFormats', []):
+            if stream.get('qualityLabel') == '144p' and stream.get('container') == 'webm':
+                videourl.remove(stream.get('url'))
+        return videourl
 
+    except requests.exceptions.RequestException as e:
+        return None
+    return None  # 一致するフォーマットが見つからなかった場合にNoneを返す
+"""
 def get_search(q,page):
     global logs
     t = json.loads(apirequest(fr"api/v1/search?q={urllib.parse.quote(q)}&page={page}&hl=jp"))
